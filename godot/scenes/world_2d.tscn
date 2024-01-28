@@ -1,0 +1,50 @@
+[gd_scene load_steps=12 format=3 uid="uid://dhu45ouf1d3rd"]
+
+[ext_resource type="PackedScene" uid="uid://c4mtbncmbxr51" path="res://scenes/terrain_controller.tscn" id="1_8vw2o"]
+[ext_resource type="Script" path="res://scenes/world_2d.gd" id="1_j7rsk"]
+[ext_resource type="PackedScene" uid="uid://bm2bouy6icxqt" path="res://scenes/player.tscn" id="2_k5oft"]
+[ext_resource type="AudioStream" uid="uid://c3mgj0ujbagpu" path="res://jokes/EV1.ogg" id="2_wvsv6"]
+[ext_resource type="AudioStream" uid="uid://cch4ms18itmo2" path="res://jokes/EV2.ogg" id="3_v6wcj"]
+[ext_resource type="AudioStream" uid="uid://cfoqgv4u7t8wu" path="res://jokes/maethematician.ogg" id="4_f6ks2"]
+[ext_resource type="AudioStream" uid="uid://dniu04y8ymb7p" path="res://jokes/president_sleeves.ogg" id="5_58qow"]
+[ext_resource type="AudioStream" uid="uid://wcxkq2qijurl" path="res://jokes/scarecrow.ogg" id="6_tenif"]
+[ext_resource type="PackedScene" uid="uid://b6cul4fmd5keq" path="res://scenes/enemy.tscn" id="9_w0lcl"]
+[ext_resource type="PackedScene" uid="uid://7wu3blqboxy4" path="res://enemy_spawner.tscn" id="10_xyn42"]
+[ext_resource type="PackedScene" uid="uid://dvd3ih4mkwfo6" path="res://scenes/score.tscn" id="11_wx5g6"]
+
+[node name="World2d" type="Node2D"]
+script = ExtResource("1_j7rsk")
+joke_array = Array[AudioStreamOggVorbis]([ExtResource("2_wvsv6"), ExtResource("3_v6wcj"), ExtResource("4_f6ks2"), ExtResource("5_58qow"), ExtResource("6_tenif")])
+
+[node name="TerrainController" parent="." instance=ExtResource("1_8vw2o")]
+
+[node name="Player" parent="." instance=ExtResource("2_k5oft")]
+unique_name_in_owner = true
+
+[node name="EnemySpawner" parent="Player" instance=ExtResource("10_xyn42")]
+unique_name_in_owner = true
+position = Vector2(0, -400)
+rotation = 3.14159
+scale = Vector2(1.00001, -1)
+
+[node name="CanvasGroup" type="CanvasGroup" parent="Player"]
+position = Vector2(-2.78871e-06, -1.1)
+rotation = 3.14159
+scale = Vector2(1.00001, -1)
+
+[node name="Score" parent="Player/CanvasGroup" instance=ExtResource("11_wx5g6")]
+unique_name_in_owner = true
+offset_left = 210.0
+offset_top = -262.0
+offset_right = 210.0
+offset_bottom = -262.0
+
+[node name="JokeTimer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[node name="Enemy" parent="." instance=ExtResource("9_w0lcl")]
+position = Vector2(-33, -294)
+
+[connection signal="timeout" from="JokeTimer" to="." method="_on_joke_timer_timeout"]

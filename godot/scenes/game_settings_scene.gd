@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var overlay := %FadeOverlay
-@onready var return_button := %ReturnButton
+@onready var return_button := %ReturnButton	
 
 func _ready():
 	overlay.on_complete_fade_out.connect(_on_fade_overlay_on_complete_fade_out)

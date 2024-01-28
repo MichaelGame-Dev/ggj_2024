@@ -8,14 +8,17 @@ const SETTINGS_FILE = "user://settings.cfg"
 const MASTERVOLUME_ENABLED = "mastervolume_enabled"
 const MUSICVOLUME_ENABLED = "musicvolume_enabled"
 const SOUNDVOLUME_ENABLED = "soundvolume_enabled"
+const JOKEVOLUME_ENABLED = "jokevolume_enabled"
 const MASTERVOLUME = "mastervolume"
 const MUSICVOLUME = "musicvolume"
 const SOUNDVOLUME = "soundvolume"
+const JOKEVOLUME = "jokevolume"
 const GAME_LANGUAGE = "game_locale"
 
 const AUDIO_BUS_MASTER = "Master"
-const AUDIO_BUS_SOUND = "Sound"
+const AUDIO_BUS_SOUND = "SFX"
 const AUDIO_BUS_MUSIC = "Music"
+const AUDIO_BUS_JOKE =  "Joke"
 	
 var USER_SETTING_DEFAULTS = {
 	MASTERVOLUME_ENABLED:true,
@@ -24,6 +27,7 @@ var USER_SETTING_DEFAULTS = {
 	MASTERVOLUME:100,
 	MUSICVOLUME:70,
 	SOUNDVOLUME:100,
+	JOKEVOLUME: 100,
 	GAME_LANGUAGE:"en"
 }
 
@@ -44,12 +48,16 @@ func set_value(key, value):
 		_update_volume(SOUNDVOLUME, AUDIO_BUS_SOUND)
 	if key == MUSICVOLUME:
 		_update_volume(MUSICVOLUME, AUDIO_BUS_MUSIC)
+	if key == JOKEVOLUME:
+		_update_volume(MUSICVOLUME, AUDIO_BUS_JOKE)
 	if key == MASTERVOLUME_ENABLED:
 		_mute_bus(MASTERVOLUME_ENABLED, AUDIO_BUS_MASTER)
 	if key == MUSICVOLUME_ENABLED:
 		_mute_bus(MUSICVOLUME_ENABLED, AUDIO_BUS_MUSIC)
 	if key == SOUNDVOLUME_ENABLED:
 		_mute_bus(SOUNDVOLUME_ENABLED, AUDIO_BUS_SOUND)
+	if key == JOKEVOLUME_ENABLED:
+		_mute_bus(JOKEVOLUME_ENABLED, AUDIO_BUS_JOKE)
 	if key == GAME_LANGUAGE:
 		TranslationServer.set_locale(value)
 	emit_signal("on_value_change", key, value)

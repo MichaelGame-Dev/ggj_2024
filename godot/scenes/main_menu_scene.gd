@@ -9,6 +9,8 @@ extends Node2D
 @onready var settings_button := %SettingsButton
 @onready var exit_button := %ExitButton
 
+const bg_music = preload("res://music/Guy_of_the_Tiger_demo.ogg")
+
 var next_scene = game_scene
 var new_game = true
 
@@ -17,6 +19,9 @@ func _ready() -> void:
 	new_game_button.disabled = game_scene == null
 	settings_button.disabled = settings_scene == null
 	continue_button.visible = SaveGame.has_save() and SaveGame.ENABLED
+	SoundManager.set_default_music_bus("Music")
+	if !SoundManager.is_music_playing():
+		SoundManager.play_music_at_volume(bg_music, SoundManager.get_music_volume())
 	
 	# connect signals
 	new_game_button.pressed.connect(_on_play_button_pressed)

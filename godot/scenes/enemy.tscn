@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6cul4fmd5keq"]
+
+[ext_resource type="Texture2D" uid="uid://dbi3kwcagajfd" path="res://scenes/boot/logo.png" id="1_7s3ra"]
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_qxa8l"]
+[ext_resource type="PackedScene" uid="uid://bi6nkqm2m17d8" path="res://scenes/hitbox.tscn" id="2_udc8m"]
+[ext_resource type="PackedScene" uid="uid://dm0u8ojj1jdg6" path="res://scenes/hurtbox.tscn" id="3_r0jtc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vwkud"]
+radius = 14.0
+height = 46.0
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_qxa8l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.0551758, 0.0551758)
+texture = ExtResource("1_7s3ra")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_udc8m")]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_vwkud")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_r0jtc")]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_vwkud")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1, 1)
+scale = Vector2(1.9, 2)
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvd3ih4mkwfo6"]
+
+[ext_resource type="Theme" uid="uid://d22mpqutkotsu" path="res://ui/theme.tres" id="1_eci02"]
+[ext_resource type="Script" path="res://scenes/score.gd" id="2_wkng6"]
+
+[node name="Score" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_eci02")
+script = ExtResource("2_wkng6")
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Score: 0"

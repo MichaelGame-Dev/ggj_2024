@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbipex6k121r6"]
+
+[ext_resource type="Script" path="res://scenes/bullet.gd" id="1_oe74o"]
+[ext_resource type="PackedScene" uid="uid://bi6nkqm2m17d8" path="res://scenes/hitbox.tscn" id="2_8pf00"]
+[ext_resource type="Texture2D" uid="uid://o5mwpp6modxr" path="res://attacks/ha..png" id="3_sk721"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gfy1r"]
+radius = 8.0
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_oe74o")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-0.5, -0.5)
+scale = Vector2(0.75, 0.65)
+
+[node name="Hitbox" parent="." instance=ExtResource("2_8pf00")]
+collision_layer = 2
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_gfy1r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_sk721")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4mtbncmbxr51"]
+
+[ext_resource type="Script" path="res://scenes/terrain_controller.gd" id="1_eoint"]
+
+[node name="TerrainController" type="Node2D"]
+script = ExtResource("1_eoint")
+terrian_blocks_path = "res://scenes/terrian_blocks"
