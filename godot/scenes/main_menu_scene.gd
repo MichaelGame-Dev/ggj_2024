@@ -2,12 +2,14 @@ extends Node2D
 
 @export var game_scene:PackedScene
 @export var settings_scene:PackedScene
+@export var credits_scene : PackedScene
 
 @onready var overlay := %FadeOverlay
 @onready var continue_button := %ContinueButton
 @onready var new_game_button := %NewGameButton
 @onready var settings_button := %SettingsButton
 @onready var exit_button := %ExitButton
+@onready var credits_button = %CreditsButton
 
 const bg_music = preload("res://music/Guy_of_the_Tiger_demo.ogg")
 
@@ -27,6 +29,7 @@ func _ready() -> void:
 	new_game_button.pressed.connect(_on_play_button_pressed)
 	continue_button.pressed.connect(_on_continue_button_pressed)
 	settings_button.pressed.connect(_on_settings_button_pressed)
+
 	exit_button.pressed.connect(_on_exit_button_pressed)
 	overlay.on_complete_fade_out.connect(_on_fade_overlay_on_complete_fade_out)
 	
@@ -56,3 +59,9 @@ func _on_fade_overlay_on_complete_fade_out() -> void:
 	if new_game and SaveGame.has_save():
 		SaveGame.delete_save()
 	get_tree().change_scene_to_packed(next_scene)
+
+
+func _on_credits_button_pressed():
+	new_game = false
+	next_scene = credits_scene
+	overlay.fade_out()

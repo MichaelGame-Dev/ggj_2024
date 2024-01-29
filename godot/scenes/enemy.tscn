@@ -1,20 +1,92 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6cul4fmd5keq"]
+[gd_scene load_steps=12 format=3 uid="uid://b6cul4fmd5keq"]
 
-[ext_resource type="Texture2D" uid="uid://dbi3kwcagajfd" path="res://scenes/boot/logo.png" id="1_7s3ra"]
 [ext_resource type="Script" path="res://scenes/enemy.gd" id="1_qxa8l"]
+[ext_resource type="Texture2D" uid="uid://d0p8fltdv0j7v" path="res://characters/child1.png" id="2_3ttpl"]
 [ext_resource type="PackedScene" uid="uid://bi6nkqm2m17d8" path="res://scenes/hitbox.tscn" id="2_udc8m"]
+[ext_resource type="Texture2D" uid="uid://dloj5ohufwv3b" path="res://characters/frog_kid.png" id="3_legk0"]
 [ext_resource type="PackedScene" uid="uid://dm0u8ojj1jdg6" path="res://scenes/hurtbox.tscn" id="3_r0jtc"]
+[ext_resource type="Texture2D" uid="uid://bdenpggbd1kp0" path="res://characters/tiger_kid.png" id="4_jlqjx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vwkud"]
-radius = 14.0
-height = 46.0
+radius = 11.0
+height = 34.0
+
+[sub_resource type="Animation" id="Animation_brrdu"]
+resource_name = "walking"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_5u7qu"]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_xo7gq"]
+resource_name = "frog_walking"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kxja5"]
+_data = {
+"RESET": SubResource("Animation_5u7qu"),
+"frog_walking": SubResource("Animation_xo7gq"),
+"walking": SubResource("Animation_brrdu")
+}
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_qxa8l")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.0551758, 0.0551758)
-texture = ExtResource("1_7s3ra")
+texture = ExtResource("2_3ttpl")
+hframes = 6
+region_enabled = true
+region_rect = Rect2(576.055, 146.13, 191.442, 49.5063)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_legk0")
+hframes = 6
+region_enabled = true
+region_rect = Rect2(576.055, 146.13, 191.442, 49.5063)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_jlqjx")
+hframes = 6
+frame = 5
+region_enabled = true
+region_rect = Rect2(576.055, 146.13, 191.442, 49.5063)
 
 [node name="Hitbox" parent="." instance=ExtResource("2_udc8m")]
 collision_layer = 8
@@ -31,8 +103,13 @@ collision_mask = 16
 shape = SubResource("CapsuleShape2D_vwkud")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(1, 1)
-scale = Vector2(1.9, 2)
+position = Vector2(1, -2)
+scale = Vector2(1.2, 1.7)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kxja5")
+}
 
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

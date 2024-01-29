@@ -17,7 +17,7 @@ const VERTICAL_SPEED = -100.0
 @onready var attack_timer = $AttackTimer
 
 
-
+signal player_died
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -44,11 +44,10 @@ func _physics_process(delta):
 	#else:
 		#velocity.x = move_toward(velocity.x, 0, SPEED)
 		##velocity.z = move_toward(velocity.z, 0, SPEED)
-		
+	velocity.y = VERTICAL_SPEED
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * SPEED
-		velocity.y = VERTICAL_SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
@@ -76,7 +75,7 @@ func _on_hurtbox_hurt(hitbox, damage):
 		#hurtbox_collision.disabled = true
 		player_health -= 1
 		if player_health <= 0:
-			print("game over")
+			player_died.emit()
 		hurtbox.is_invincible = true
 		#blinking_animation_player.play("take_hit")
 		#await blinking_animation_player.animation_finished

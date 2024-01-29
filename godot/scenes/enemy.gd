@@ -1,9 +1,10 @@
 extends Node2D
+@onready var animation_player = $AnimationPlayer
 
 var health : int = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	modulate = Color("blue")
+	animation_player.play("walking")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

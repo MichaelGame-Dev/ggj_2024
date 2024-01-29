@@ -40,7 +40,7 @@ offset_right = 210.0
 offset_bottom = -262.0
 
 [node name="JokeTimer" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 10.0
 one_shot = true
 autostart = true
 

@@ -15,7 +15,7 @@ var joke: AudioStreamOggVorbis
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#_load_jokes(jokes_path) # Replace with function body.
-	pass
+	player.player_died.connect(start_game_over)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -31,15 +31,17 @@ func _load_jokes(target_path: String) -> void:
 
 func _play_joke(joke_file):
 	var joke_played = SoundManager.play_joke(joke_file)
-	joke_timer.start()
+	joke_timer.start(30)
 
 
 	
 func _on_joke_timer_timeout():
 	joke = joke_array.pick_random()
-	print(joke)
+
 	_play_joke(joke)
 	
 func spawn_enemey():
 	pass
 	
+func start_game_over():
+	Globals.game_over.emit(score.score)
